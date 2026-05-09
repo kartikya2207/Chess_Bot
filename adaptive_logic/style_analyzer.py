@@ -145,41 +145,41 @@ class StyleAnalyzer:
         # Defensive players: avoid captures, focus on safety, castling, protecting pieces
         defensive_indicators = []
         
-        for move in moves:
+        for i, move in enumerate(moves):
             move_defense = 0.0
-            
+
             # 1. Castling (king safety)
             if move.get('is_castling', False):
                 move_defense += 0.5
-            
+
             # 2. High defensive value (protecting pieces)
             defensive_val = move.get('defensive_value', 0)
             if defensive_val > 15:
                 move_defense += 0.4
             elif defensive_val > 8:
                 move_defense += 0.2
-            
+
             # 3. Avoiding bad trades (not capturing when behind)
             value_gain = move.get('piece_value_gain', 0)
             if not move.get('is_capture', False) and value_gain <= 0:
                 # Non-capturing move that doesn't lose material
                 move_defense += 0.1
-            
+
             # 4. Pawn moves (building structure)
             if move.get('piece_type') == Piece.PAWN and not move.get('is_capture', False):
                 move_defense += 0.15
-            
+
             # 5. Retreating pieces (moving away from center/forward)
             if move.get('piece_type') in [Piece.ROOK, Piece.BISHOP, Piece.QUEEN]:
                 if not move.get('is_capture', False) and not move.get('central_square', False):
                     if not move.get('move_forward', False):
                         move_defense += 0.1
-            
+
             # 6. Low aggression moves (not attacking)
-            move_aggression = aggression_indicators[moves.index(move)] if move in moves else 0.0
+            move_aggression = aggression_indicators[i]
             if move_aggression < 0.2:
                 move_defense += 0.1
-            
+
             defensive_indicators.append(move_defense)
         
         avg_defense = sum(defensive_indicators) / total_moves if total_moves > 0 else 0.0

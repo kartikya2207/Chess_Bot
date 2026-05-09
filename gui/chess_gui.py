@@ -247,7 +247,7 @@ class ChessGUI:
                         x, y,
                         text=symbol,
                         font=("Arial", font_size),
-                        fill="black" if piece_color == Color.WHITE else "black"
+                        fill="white" if piece_color == Color.WHITE else "black"
                     )
     
     def _update_display(self):

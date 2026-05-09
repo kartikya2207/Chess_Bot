@@ -291,6 +291,8 @@ class ChessBoard:
         # Store move information
         captured_piece = self.get_piece(to_row, to_col)
         old_en_passant = self.en_passant_target
+        old_castling_rights = self.castling_rights.copy()
+        old_halfmove_clock = self.halfmove_clock
         moved_rook = None
         rook_from = None
         rook_to = None
@@ -379,8 +381,10 @@ class ChessBoard:
             if moved_rook and rook_from and rook_to:
                 self.set_piece(rook_from[0], rook_from[1], moved_rook[0], moved_rook[1])
                 self.remove_piece(rook_to[0], rook_to[1])
-            # Restore en passant
+            # Restore all state
             self.en_passant_target = old_en_passant
+            self.castling_rights = old_castling_rights
+            self.halfmove_clock = old_halfmove_clock
             return False
         
         # Record move
@@ -391,7 +395,10 @@ class ChessBoard:
             'captured': captured_piece,
             'promoted': final_piece if final_piece != piece else None,
             'castling': (rook_from, rook_to) if moved_rook else None,
-            'en_passant_capture_pos': en_passant_capture_pos if en_passant_capture_pos else None
+            'en_passant_capture_pos': en_passant_capture_pos if en_passant_capture_pos else None,
+            'old_en_passant': old_en_passant,
+            'old_castling_rights': old_castling_rights,
+            'old_halfmove_clock': old_halfmove_clock,
         }
         self.move_history.append(move_info)
         
@@ -451,9 +458,12 @@ class ChessBoard:
                     self.remove_piece(rook_to[0], rook_to[1])
                     self.set_piece(rook_from[0], rook_from[1], rook[0], rook[1])
         
-        # Restore turn
+        # Restore turn and board-state fields saved before the move
         self.turn = Color.BLACK if current_turn == Color.WHITE else Color.WHITE
-        
+        self.en_passant_target = move_info.get('old_en_passant')
+        self.castling_rights = move_info.get('old_castling_rights', self.castling_rights).copy()
+        self.halfmove_clock = move_info.get('old_halfmove_clock', self.halfmove_clock)
+
         if current_turn == Color.BLACK:
             self.fullmove_number -= 1
     

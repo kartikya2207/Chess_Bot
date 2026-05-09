@@ -31,7 +31,10 @@ The engine adapts in the following ways:
 ## 📋 Requirements
 
 - Python 3.7 or higher
-- No external dependencies (uses only Python standard library)
+- `matplotlib` (required for the radar chart panel)
+- `numpy` (required by `gui/radar_chart.py`)
+
+Install with: `pip install matplotlib numpy`
 
 ## 🚀 Quick Start
 
