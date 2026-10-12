@@ -8,6 +8,10 @@ An academic project I built at IIT Bombay. You play against the engine in a Tkin
 
 Everything chess-related — board, move generation, search, evaluation — is written by hand; there's no `python-chess` underneath.
 
+![Adaptive Chess Engine GUI](docs/images/gui_screenshot.png)
+
+*The Tkinter GUI a few moves into a game: board on the left, live style radar chart and player profile on the right.*
+
 ## What I did
 
 **Engine core (`engine/`)**
