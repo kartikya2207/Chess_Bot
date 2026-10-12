@@ -304,6 +304,8 @@ class StyleAnalyzer:
         for move in moves:
             move_endgame = 0.0
             piece_type = move.get('piece_type')
+            # adaptive_engine stores the mover as the string 'white'/'black'
+            color = Color.BLACK if move.get('color') in (Color.BLACK, 'black') else Color.WHITE
             
             # 1. King activity (crucial in endgame)
             if piece_type == Piece.KING:

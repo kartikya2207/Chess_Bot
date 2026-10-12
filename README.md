@@ -64,7 +64,7 @@ More detail: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/ADAPTIVE_LEARNI
 Requires Python 3.7+ with Tkinter (bundled with most Python installs).
 
 ```bash
-pip install -r requirements.txt numpy   # matplotlib is in requirements; numpy is also needed by the radar chart
+pip install -r requirements.txt
 python main.py
 python main.py --player-id alice --player-name "Alice" --depth 5
 ```

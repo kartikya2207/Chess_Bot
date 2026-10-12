@@ -4,9 +4,9 @@
 #
 # Required dependencies:
 matplotlib>=3.5.0  # For radar chart visualization
+numpy              # Used by gui/radar_chart.py
 
 # Optional dependencies:
-# - numpy: For more efficient numerical operations (optional)
 # - scipy: For advanced statistical analysis (optional)
 # - pytest: For testing framework (optional)
 
